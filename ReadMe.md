@@ -35,12 +35,18 @@ nest g service users
 nest g controller users
 
 npx prisma migrate dev --name init
-
+npx prisma migrate deploy
 
 ////////////////////////////////////////
 .env
 // client
-NEXT_PUBLIC_SERVER_URL=http://localhost:3001
+NEXT_PUBLIC_SERVER_URL=http://localhost:5000
 
 // server
 DATABASE_URL="mysql://root:password@localhost:3306/mydb"
+
+SERVER_PROTOCOL=https
+SERVER_HOST=localhost
+SERVER_PORT=5000
+
+CLIENT_URL=https://localhost:3000

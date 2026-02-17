@@ -2,53 +2,60 @@ name: CICD
 
 on:
   push:
+    branches: ["main"]
   pull_request:
 
 jobs:
 
   # -----------------------------
-  # step 1: run tests
+  # 1️ CLIENT TEST
   # -----------------------------
   client-test:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: client
+
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
+          cache: npm
+          cache-dependency-path: client/package-lock.json
 
-      - name: install client deps
-        working-directory: client
-        run: npm ci
+      - run: npm ci
+      - run: npm run test -- --ci
 
-      - name: run client jest
-        working-directory: client
-        run: npm run test -- --ci
 
+  # -----------------------------
+  # 2️ SERVER TEST
+  # -----------------------------
   server-test:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: server
+
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
+          cache: npm
+          cache-dependency-path: server/package-lock.json
 
-      - name: install server deps
-        working-directory: server
-        run: npm ci
+      - run: npm ci
+      - run: npx prisma generate
+      - run: npm run test -- --ci
 
-      - name: run server jest
-        working-directory: server
-        run: npm run test -- --ci
 
   # -----------------------------
-  # step 2: docker build
+  # 3 DOCKER BUILD
   # -----------------------------
   docker-build:
     needs: [client-test, server-test]
@@ -57,8 +64,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: build client image
+      - name: Build client image
         run: docker build -t client-app ./client
 
-      - name: build server image
+      - name: Build server image
         run: docker build -t server-app ./server
