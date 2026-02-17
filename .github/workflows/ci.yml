@@ -1,0 +1,64 @@
+name: CICD
+
+on:
+  push:
+  pull_request:
+
+jobs:
+
+  # -----------------------------
+  # step 1: run tests
+  # -----------------------------
+  client-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: install client deps
+        working-directory: client
+        run: npm ci
+
+      - name: run client jest
+        working-directory: client
+        run: npm run test -- --ci
+
+  server-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: install server deps
+        working-directory: server
+        run: npm ci
+
+      - name: run server jest
+        working-directory: server
+        run: npm run test -- --ci
+
+  # -----------------------------
+  # step 2: docker build
+  # -----------------------------
+  docker-build:
+    needs: [client-test, server-test]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: build client image
+        run: docker build -t client-app ./client
+
+      - name: build server image
+        run: docker build -t server-app ./server

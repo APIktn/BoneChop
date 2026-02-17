@@ -9,9 +9,8 @@ npm install @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities
 npm install framer-motion
 npm install axios
 npm install jwt-decode
-npm install -D vitest @testing-library/react @testing-library/jest-dom
-npm install -D jsdom@22.1.0
-npm install -D @vitest/coverage-v8
+npm install -D jest jest-environment-jsdom @testing-library/react @testing-library/jest-dom @types/jest
+npm install -D ts-jest @types/node
 
 ////////////////////////////////////////
 server
@@ -19,8 +18,9 @@ server
 npm install -g @nestjs/cli
 nest new server
 npm install @nestjs/config
-npm install prisma @prisma/client
+npm install prisma@6.19.2 @prisma/client@6.19.2
 npx prisma init
+npx prisma generate
 npm install @nestjs/jwt @nestjs/passport passport passport-jwt bcrypt
 npm install -D @types/bcrypt
 npm install cookie-parser
@@ -33,3 +33,14 @@ nest g controller auth
 nest g module users
 nest g service users
 nest g controller users
+
+npx prisma migrate dev --name init
+
+
+////////////////////////////////////////
+.env
+// client
+NEXT_PUBLIC_SERVER_URL=http://localhost:3001
+
+// server
+DATABASE_URL="mysql://root:password@localhost:3306/mydb"
