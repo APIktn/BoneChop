@@ -18,6 +18,7 @@ server
 npm install -g @nestjs/cli
 nest new server
 npm install @nestjs/config
+npm install class-validator class-transformer
 npm install prisma@6.19.2 @prisma/client@6.19.2
 npx prisma init
 npx prisma generate
@@ -25,6 +26,7 @@ npm install @nestjs/jwt @nestjs/passport passport passport-jwt bcrypt
 npm install -D @types/bcrypt
 npm install cookie-parser
 npm install -D @types/cookie-parser
+
 nest g module prisma
 nest g service prisma
 nest g module auth
