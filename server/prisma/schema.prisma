@@ -19,8 +19,8 @@ model User {
   Password       String   @db.VarChar(150)
   FirstName      String   @db.VarChar(150)
   LastName       String   @db.VarChar(150)
-  Address        String   @db.Text
-  Tel            String   @db.VarChar(20)
+  Address        String?   @db.Text
+  Tel            String?   @db.VarChar(20)
   Profile_Image  String   @db.Text
   Upload_Image   String?  @db.Text
   CreateBy       String   @db.VarChar(20)
