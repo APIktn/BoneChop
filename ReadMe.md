@@ -27,14 +27,9 @@ npm install -D @types/bcrypt
 npm install cookie-parser
 npm install -D @types/cookie-parser
 
-nest g module prisma
-nest g service prisma
-nest g module auth
-nest g service auth
-nest g controller auth
-nest g module users
-nest g service users
-nest g controller users
+nest g module test
+nest g service test
+nest g controller test
 
 npx prisma migrate dev --name init
 npx prisma migrate deploy
@@ -45,10 +40,18 @@ npx prisma migrate deploy
 NEXT_PUBLIC_SERVER_URL=http://localhost:5000
 
 // server
-DATABASE_URL="mysql://root:password@localhost:3306/mydb"
-
-SERVER_PROTOCOL=https
-SERVER_HOST=localhost
 SERVER_PORT=5000
+SERVER_HOST=localhost
+NODE_ENV=development
 
-CLIENT_URL=https://localhost:3000
+CLIENT_URL=http://localhost:3000
+
+# DATABASE (Prisma)
+DATABASE_URL="mysql://root:pass@localhost:3306/bonechop"
+
+# JWT
+JWT_ACCESS_SECRET=
+JWT_REFRESH_SECRET=
+
+JWT_ACCESS_EXPIRES=15m
+JWT_REFRESH_EXPIRES=7d
