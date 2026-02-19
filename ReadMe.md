@@ -55,3 +55,11 @@ JWT_REFRESH_SECRET=
 
 JWT_ACCESS_EXPIRES=15m
 JWT_REFRESH_EXPIRES=7d
+
+////////////////////////////////////////
+ctrl + shift + p
+Open User Settings (JSON)
+
+    "files.exclude": {
+        "client/.next": true
+    },

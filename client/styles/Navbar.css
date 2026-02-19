@@ -1,0 +1,40 @@
+/* wrapper layer */
+.navbar-layer {
+  position: sticky;
+  top: 0;
+  z-index: 1200;
+  padding: 16px 24px;
+  transition: all 0.3s ease;
+}
+
+/* floating style */
+.navbar {
+  border-radius: 20px;
+  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.6);
+  transition: all 0.3s ease;
+}
+
+/* dark mode support */
+[data-theme="dark"] .navbar {
+  background: rgba(20, 20, 20, 0.6);
+}
+
+/* sticky mode */
+.navbar.scrolled {
+  border-radius: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* center menu hide on mobile */
+.navbar-center {
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 900px) {
+  .navbar-center {
+    display: none;
+  }
+}
