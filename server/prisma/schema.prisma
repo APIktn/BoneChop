@@ -7,10 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-//////////////////////////////////////////////////
-// USERS
-//////////////////////////////////////////////////
-
 model User {
   Id             Int      @id @default(autoincrement())
   UserCode       String   @unique @db.VarChar(20)
@@ -27,13 +23,12 @@ model User {
   CreateDateTime DateTime @db.DateTime
   UpdateBy       String   @db.VarChar(20)
   UpdateDateTime DateTime @db.DateTime
+  TokenVersion   Int      @default(0)
+
+  tokens    Token[]
 
   @@map("tbl_mas_users")
 }
-
-//////////////////////////////////////////////////
-// PRODUCT HEADER
-//////////////////////////////////////////////////
 
 model ProductHeader {
   Id             Int       @id @default(autoincrement())
@@ -51,10 +46,6 @@ model ProductHeader {
   @@map("tbl_trs_product_header")
 }
 
-//////////////////////////////////////////////////
-// PRODUCT IMAGE
-//////////////////////////////////////////////////
-
 model ProductImage {
   Id              Int      @id @default(autoincrement())
   IdRef           Int
@@ -70,10 +61,6 @@ model ProductImage {
 
   @@map("tbl_trs_product_image")
 }
-
-//////////////////////////////////////////////////
-// PRODUCT LINE
-//////////////////////////////////////////////////
 
 model ProductLine {
   Id             Int      @id @default(autoincrement())
@@ -92,3 +79,18 @@ model ProductLine {
 
   @@map("tbl_trs_product_line")
 }
+
+model Token {
+  Id            Int      @id @default(autoincrement())
+  UserId        Int
+  TokenHash     String   @db.VarChar(255)
+  ExpiresAt     DateTime @db.DateTime
+  AbsoluteExp   DateTime @db.DateTime
+  CreateBy      String   @db.VarChar(20)
+  CreatedAt     DateTime @default(now())
+
+  user User @relation(fields: [UserId], references: [Id], onDelete: Cascade)
+
+  @@index([UserId])
+}
+

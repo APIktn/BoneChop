@@ -29,7 +29,7 @@ async function bootstrap() {
 
   app.use(cookieParser())
 
-  await app.listen(PORT)
+  await app.listen(PORT,HOST)
 
   console.log(
     `🚀 Server running on ${isProd ? 'https' : 'http'}://${HOST}:${PORT}`,
