@@ -23,9 +23,13 @@ npm install prisma@6.19.2 @prisma/client@6.19.2
 npx prisma init
 npx prisma generate
 npm install @nestjs/jwt @nestjs/passport passport passport-jwt bcrypt
+npm install @nestjs/mapped-types
 npm install -D @types/bcrypt
 npm install cookie-parser
 npm install -D @types/cookie-parser
+npm install @nestjs/platform-express multer
+npm install -D @types/multer
+npm install cloudinary
 
 nest g module test
 nest g service test
