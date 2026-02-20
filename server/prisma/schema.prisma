@@ -8,23 +8,24 @@ datasource db {
 }
 
 model User {
-  Id             Int      @id @default(autoincrement())
-  UserCode       String   @unique @db.VarChar(20)
-  UserName       String?  @db.VarChar(150)
-  UserEmail      String   @db.VarChar(150)
-  Password       String   @db.VarChar(150)
-  FirstName      String   @db.VarChar(150)
-  LastName       String   @db.VarChar(150)
-  Address        String?   @db.Text
-  Tel            String?   @db.VarChar(20)
-  Profile_Image  String   @db.Text
-  Upload_Image   String?  @db.Text
-  CreateBy       String   @db.VarChar(20)
-  CreateDateTime DateTime @db.DateTime
-  UpdateBy       String   @db.VarChar(20)
-  UpdateDateTime DateTime @db.DateTime
-  TokenVersion   Int      @default(0)
-
+  Id                Int      @id @default(autoincrement())
+  UserCode          String   @unique @db.VarChar(20)
+  UserName          String?  @db.VarChar(150)
+  UserEmail         String   @db.VarChar(150)
+  Password          String   @db.VarChar(150)
+  FirstName         String   @db.VarChar(150)
+  LastName          String   @db.VarChar(150)
+  Address           String?   @db.Text
+  Tel               String?   @db.VarChar(20)
+  Profile_Image     String   @db.Text
+  Upload_Image      String?  @db.Text
+  Upload_Image_Id   String?  @db.Text
+  CreateBy          String   @db.VarChar(20)
+  CreateDateTime    DateTime @db.DateTime
+  UpdateBy          String   @db.VarChar(20)
+  UpdateDateTime    DateTime @db.DateTime
+  TokenVersion      Int      @default(0)
+   
   tokens    Token[]
 
   @@map("tbl_mas_users")
@@ -37,7 +38,7 @@ model ProductHeader {
   ProductDes     String    @db.Text
   CreateBy       String    @db.VarChar(20)
   CreateDateTime DateTime  @db.DateTime
-  UpdateBy       Int
+  UpdateBy       String    @db.VarChar(20)
   UpdateDateTime DateTime  @db.DateTime
 
   images ProductImage[]
@@ -51,7 +52,7 @@ model ProductImage {
   IdRef           Int
   ImageType       String   @db.VarChar(50)
   ProductImage    String   @db.Text
-  ProductImageId  String   @db.Text
+  ProductImageId  String?   @db.Text
   CreateBy        String   @db.VarChar(20)
   CreateDateTime  DateTime @db.Date
   UpdateBy        String   @db.VarChar(20)
@@ -69,7 +70,7 @@ model ProductLine {
   Size           String   @db.VarChar(150)
   Price          Decimal  @db.Decimal(10, 2)
   Amount         Int
-  Note           String   @db.Text
+  Note           String?   @db.Text
   CreateBy       String   @db.VarChar(20)
   CreateDateTime DateTime @db.DateTime
   UpdateBy       String   @db.VarChar(20)
