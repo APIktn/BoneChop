@@ -1,15 +1,26 @@
 "use client"
 
-import { createContext, useContext, useMemo, useState } from "react"
-import { ThemeProvider as MuiThemeProvider, createTheme } from "@mui/material/styles"
+import {
+  createContext,
+  useContext,
+  useMemo,
+  useState,
+  useEffect,
+} from "react"
+import {
+  ThemeProvider as MuiThemeProvider,
+  createTheme,
+} from "@mui/material/styles"
 import CssBaseline from "@mui/material/CssBaseline"
 
 type ThemeMode = "light" | "dark"
 
-const ThemeContext = createContext<{
+interface ThemeContextType {
   theme: ThemeMode
   toggleTheme: () => void
-} | null>(null)
+}
+
+const ThemeContext = createContext<ThemeContextType | null>(null)
 
 export function ThemeProvider({
   children,
@@ -17,6 +28,21 @@ export function ThemeProvider({
   children: React.ReactNode
 }) {
   const [theme, setTheme] = useState<ThemeMode>("light")
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    const saved = localStorage.getItem("theme") as ThemeMode | null
+    if (saved === "light" || saved === "dark") {
+      setTheme(saved)
+    }
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (mounted) {
+      localStorage.setItem("theme", theme)
+    }
+  }, [theme, mounted])
 
   const toggleTheme = () => {
     setTheme(prev => (prev === "light" ? "dark" : "light"))
@@ -31,6 +57,8 @@ export function ThemeProvider({
       }),
     [theme]
   )
+
+  if (!mounted) return null
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>

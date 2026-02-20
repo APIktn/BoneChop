@@ -1,6 +1,8 @@
 tech stack
 ////////////////////////////////////////
 client
+npm run dev
+npm run test
 
 npx create-next-app@latest client
 npm install react-icons
@@ -14,6 +16,8 @@ npm install -D ts-jest @types/node
 
 ////////////////////////////////////////
 server
+npm run start:dev
+npm run test
 
 npm install -g @nestjs/cli
 nest new server

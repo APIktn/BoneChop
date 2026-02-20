@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import {
   Toolbar,
@@ -9,43 +9,50 @@ import {
   Box,
   Paper,
   Switch,
-} from "@mui/material";
+} from "@mui/material"
 
-import MenuIcon from "@mui/icons-material/Menu";
-import HomeIcon from "@mui/icons-material/Home";
-import SupportAgentIcon from "@mui/icons-material/SupportAgent";
+import MenuIcon from "@mui/icons-material/Menu"
+import HomeIcon from "@mui/icons-material/Home"
+import SupportAgentIcon from "@mui/icons-material/SupportAgent"
 
-import { useState, useEffect } from "react";
-import { useRouter, usePathname } from "next/navigation";
-import Link from "next/link";
-import { useTheme } from "@/context/Theme";
+import { useState, useEffect } from "react"
+import { useRouter, usePathname } from "next/navigation"
+import Link from "next/link"
+import { useTheme } from "@/context/Theme"
 
 type Props = {
-  onToggleSidebar?: () => void;
-};
+  onToggleSidebar?: () => void
+  onStickyChange?: (value: boolean) => void
+}
 
-export default function Navbar({ onToggleSidebar }: Props) {
-  const router = useRouter();
-  const pathname = usePathname();
-  const { theme, toggleTheme } = useTheme();
+export default function Navbar({
+  onToggleSidebar,
+  onStickyChange,
+}: Props) {
 
-  const [isSticky, setIsSticky] = useState(false);
+  const router = useRouter()
+  const pathname = usePathname()
+  const { theme, toggleTheme } = useTheme()
 
-  // scroll detect
+  const [isSticky, setIsSticky] = useState<boolean>(false)
+
   useEffect(() => {
     const handleScroll = () => {
-      setIsSticky(window.scrollY > 80);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+      const sticky = window.scrollY > 80
+      setIsSticky(sticky)
+      onStickyChange?.(sticky)
+    }
 
-  const currentValue =
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [onStickyChange])
+
+  const currentValue: string | null =
     pathname === "/"
       ? "home"
       : pathname.startsWith("/contact")
-        ? "contact"
-        : false;
+      ? "contact"
+      : null
 
   return (
     <div className="navbar-layer">
@@ -54,8 +61,9 @@ export default function Navbar({ onToggleSidebar }: Props) {
         className={`navbar ${isSticky ? "scrolled" : ""}`}
       >
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+
           {/* LEFT */}
-          <IconButton onClick={onToggleSidebar}>
+          <IconButton onClick={() => onToggleSidebar?.()}>
             <MenuIcon />
           </IconButton>
 
@@ -84,7 +92,6 @@ export default function Navbar({ onToggleSidebar }: Props) {
 
           {/* RIGHT */}
           <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-            {/* theme toggle */}
             <Switch
               checked={theme === "dark"}
               onChange={toggleTheme}
@@ -92,7 +99,6 @@ export default function Navbar({ onToggleSidebar }: Props) {
               checkedIcon={<span>🌙</span>}
             />
 
-            {/* login */}
             <Button
               variant="outlined"
               size="small"
@@ -101,8 +107,9 @@ export default function Navbar({ onToggleSidebar }: Props) {
               Login
             </Button>
           </Box>
+
         </Toolbar>
       </Paper>
     </div>
-  );
+  )
 }

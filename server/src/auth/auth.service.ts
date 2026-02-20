@@ -48,7 +48,7 @@ export class AuthService {
         },
       })
 
-      return { message: 'registration successful' }
+      return { message: 'register successful' }
     } catch (error: any) {
       if (error.code === 'P2002') {
         throw new ConflictException('email already registered')
@@ -194,6 +194,27 @@ export class AuthService {
         TokenVersion: { increment: 1 },
       },
     })
+  }
+
+  async me(userId: number) {
+    const user = await this.prisma.user.findUnique({
+      where: { Id: userId },
+    })
+
+    if (!user) {
+      throw new UnauthorizedException()
+    }
+
+    return {
+      user: {
+        userCode: user.UserCode,
+        email: user.UserEmail,
+        userName: user.UserName,
+        firstName: user.FirstName,
+        lastName: user.LastName,
+        profileImage: user.Profile_Image,
+      },
+    }
   }
 
   private generateAccessToken(payload: any) {

@@ -1,4 +1,4 @@
-/* wrapper layer */
+/* wrapper */
 .navbar-layer {
   position: sticky;
   top: 0;
@@ -7,7 +7,7 @@
   transition: all 0.3s ease;
 }
 
-/* floating style */
+/* float */
 .navbar {
   border-radius: 20px;
   backdrop-filter: blur(12px);
@@ -15,19 +15,18 @@
   transition: all 0.3s ease;
 }
 
-/* dark mode support */
+/* dark mode */
 [data-theme="dark"] .navbar {
   background: rgba(20, 20, 20, 0.6);
 }
 
-/* sticky mode */
+/* sticky */
 .navbar.scrolled {
   border-radius: 0;
   padding-left: 0;
   padding-right: 0;
 }
 
-/* center menu hide on mobile */
 .navbar-center {
   display: flex;
   justify-content: center;
